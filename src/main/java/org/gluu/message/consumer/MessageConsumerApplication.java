@@ -1,11 +1,13 @@
 package org.gluu.message.consumer;
 
+import org.gluu.message.consumer.config.MessageConsumerProperties;
 import org.gluu.message.consumer.config.util.Constants;
 import org.gluu.message.consumer.config.util.DefaultProfileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
@@ -16,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @SpringBootApplication
+@EnableConfigurationProperties({MessageConsumerProperties.class})
 public class MessageConsumerApplication {
 
     private static final Logger log = LoggerFactory.getLogger(MessageConsumerApplication.class);

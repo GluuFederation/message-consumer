@@ -7,8 +7,8 @@ import java.util.Date;
  * Created by eugeniuparvan on 10/26/16.
  */
 @Entity
-@Table(name = "oauth2_audit_log")
-public class OAuth2AuditLog {
+@Table(name = "oauth2_audit_logging_event")
+public class OAuth2AuditLoggingEvent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -94,7 +94,7 @@ public class OAuth2AuditLog {
 
     @Override
     public String toString() {
-        return "OAuth2AuditLog{" +
+        return "OAuth2AuditLoggingEvent{" +
                 "id=" + id +
                 ", ip='" + ip + '\'' +
                 ", action='" + action + '\'' +

@@ -15,7 +15,7 @@
     <logger name="org.apache" level="WARN"/>
     <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
     <logger name="org.hibernate.validator" level="WARN"/>
-    <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.hibernate" level="TRACE"/>
     <logger name="org.springframework" level="WARN"/>
     
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
