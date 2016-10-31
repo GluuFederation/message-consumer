@@ -25,7 +25,7 @@ This version is uses [activemq](http://activemq.apache.org/) messaging server an
 #RESTful API
 **Important notes**.
 
-In order to perform search by date the following date format `yyyy-MM-dd HH:mm:ss.SSS` MUST be used, e.g:`2016-10-03 15:53:47.509`.
+In order to perform search by date the following date format `yyyy-MM-dd HH:mm:ss.SSS` MUST be used, e.g:`/api/oauth2-audit-logs/search/query?fromDate=2016-10-03%2015:53:47.509`.
 
 All string params are matched exactly e.g: `/api/oauth2-audit-logs/search/query?ip=10.0.2.2`, except `scope` and `formattedMessage` - they are searched using 'like' query, e.g: `scope like concat('%', :scope,'%')`
 
