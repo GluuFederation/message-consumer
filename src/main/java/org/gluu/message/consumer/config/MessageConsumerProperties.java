@@ -26,7 +26,7 @@ public class MessageConsumerProperties {
 
         private String destination;
 
-        private int clear_logs_older_than;
+        private int days_after_logs_can_be_deleted;
 
         private String cron_for_log_cleaner;
 
@@ -38,12 +38,12 @@ public class MessageConsumerProperties {
             this.destination = destination;
         }
 
-        public int getClear_logs_older_than() {
-            return clear_logs_older_than;
+        public int getDays_after_logs_can_be_deleted() {
+            return days_after_logs_can_be_deleted;
         }
 
-        public void setClear_logs_older_than(int clear_logs_older_than) {
-            this.clear_logs_older_than = clear_logs_older_than;
+        public void setDays_after_logs_can_be_deleted(int days_after_logs_can_be_deleted) {
+            this.days_after_logs_can_be_deleted = days_after_logs_can_be_deleted;
         }
 
         public String getCron_for_log_cleaner() {

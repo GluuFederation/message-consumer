@@ -18,7 +18,7 @@ import java.util.Date;
  */
 @RepositoryRestResource(collectionResourceRel = "oxauth-server-logs", path = "oxauth-server-logs")
 @Transactional
-public interface OXAuthServerLoggingEventRepository extends PagingAndSortingRepository<OXAuthServerLoggingEvent, Long> {
+public interface OXAuthServerLoggingEventRepository extends PagingAndSortingRepository<OXAuthServerLoggingEvent, Long>, ILogCleaner {
 
     @Query("SELECT log FROM OXAuthServerLoggingEvent log WHERE (:level IS NULL OR log.level = :level) " +
             "AND (:loggerName IS NULL OR log.loggerName = :loggerName) " +

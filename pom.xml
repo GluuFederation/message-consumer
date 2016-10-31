@@ -66,6 +66,12 @@
             <artifactId>postgresql</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!--Compatibility for oxAuth logger-->
         <dependency>
             <groupId>log4j</groupId>
