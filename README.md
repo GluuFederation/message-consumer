@@ -42,7 +42,8 @@ Default page size for all requests is 20, and max page size is 100. These proper
     
     
     
-######Example: `curl http://localhost:8080/api/oauth2-audit-logs/search/query?ip=10.0.2.2&username=admin&scope=openid&size=1`
+#####Example:
+`curl http://localhost:8080/api/oauth2-audit-logs/search/query?ip=10.0.2.2&username=admin&scope=openid&size=1`
 ```
 {
   "_embedded" : {
