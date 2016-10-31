@@ -1,12 +1,28 @@
 # message-consumer
 ### Table of Contents 
 1. [About](https://github.com/GluuFederation/message-consumer#about)
-2. [Database schema](https://github.com/GluuFederation/message-consumer#database-schema)
+2. [How it works](https://github.com/GluuFederation/message-consumer#how-it-works)
+2. [Custom properties](https://github.com/GluuFederation/message-consumer#external-properties)
+3. [RESTful API](https://github.com/GluuFederation/message-consumer#restful-api)
+4. [Database schema](https://github.com/GluuFederation/message-consumer#database-schema)
 
 #About
-The goal of this app to centralize all logs in one place and to provide a quick access to logging data by using custom search conditions. Roots of this project are drawn to the following [issue](https://github.com/GluuFederation/oxAuth/issues/307).
+The goal of this app to centralize all logs in one place and to provide a quick access to logging data by exposing RESTful API for searching with custom conditions. Roots of this project are drawn to the following [issue](https://github.com/GluuFederation/oxAuth/issues/307).
 
 This version is uses [activemq](http://activemq.apache.org/) messaging server and [postgresql](https://www.postgresql.org/) database to store logging data.
+
+#How it works
+
+#External properties
+ Besides others standard spring boot properties, the following could also be customized:
+ * `message-consumer.oauth2-audit.destination` - defines activemq queue name for oauth2 audit logging
+ * `message-consumer.oauth2-audit.days-after-logs-can-be-deleted` - defines how many days the oauth2 audit logging data should be kept
+ * `message-consumer.oauth2-audit.cron-for-log-cleaner` - defines cron expression for oauth2 audit logging data cleaner
+ * `message-consumer.oxauth-server.destination` - defines activemq queue name for oxauth server logs
+ * `message-consumer.oxauth-server.days-after-logs-can-be-deleted` - defines how many days the oxauth server logging data should be kept
+ * `message-consumer.oxauth-server.cron-for-log-cleaner` - defines cron expression for oxauth server logging data cleaner
+ 
+#RESTful API
 
 #Database schema
 
