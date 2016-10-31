@@ -1,6 +1,15 @@
 # message-consumer
+### Table of Contents 
+1. [About](https://github.com/GluuFederation/message-consumer#about)
+2. [Database schema](https://github.com/GluuFederation/message-consumer#database-schema)
+
+#About
+The goal of this app to centralize all logs in one place and to provide a quick access to logging data by using custom search conditions. Roots of this project are drawn to the following [issue](https://github.com/GluuFederation/oxAuth/issues/307).
+
+This version is uses [activemq](http://activemq.apache.org/) messaging server and [postgresql](https://www.postgresql.org/) database to store logging data.
 
 #Database schema
+
 ##List of relations
 Schema |                 Name                  | Type  | Owner
 --------|:------------------------------------:|------:|-------
