@@ -25,7 +25,7 @@ public class OAuth2AuditLoggingEventReceiver {
     @Inject
     private ObjectMapper objectMapper;
 
-    @JmsListener(destination = "${message-consumer.oauth2-audit}")
+    @JmsListener(destination = "${message-consumer.oauth2-audit.destination}")
     public void onMessage(String message) {
         try {
             OAuth2AuditLoggingEvent oAuth2AuditLoggingEvent = objectMapper.readValue(message, OAuth2AuditLoggingEvent.class);

@@ -1,9 +1,6 @@
 package org.gluu.message.consumer.domain.log4j;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 /**
  * Created by eugeniuparvan on 10/30/16.
@@ -13,7 +10,7 @@ import javax.persistence.MappedSuperclass;
 public class LoggingEventExceptionBase<T extends LoggingEventBase> {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private Integer index;

@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by eugeniuparvan on 10/26/16.
  */
 @Entity
-@Table(name = "oauth2_audit_logging_event")
+@Table(name = "oauth2_audit_logging_event", indexes = {@Index(name = "oauth2_audit_logging_event_timestamp", columnList = "timestamp")})
 public class OAuth2AuditLoggingEvent {
 
     @Id

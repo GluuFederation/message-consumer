@@ -4,7 +4,7 @@
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
 
-    <logger name="org.gluu.message.consumer" level="DEBUG"/>
+    <logger name="org.gluu.message.consumer" level="INFO"/>
 
 
     <logger name="org.apache.activemq" level="WARN"/>
@@ -15,14 +15,14 @@
     <logger name="org.apache" level="WARN"/>
     <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
     <logger name="org.hibernate.validator" level="WARN"/>
-    <logger name="org.hibernate" level="TRACE"/>
+    <logger name="org.hibernate" level="WARN"/>
     <logger name="org.springframework" level="WARN"/>
     
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
     </contextListener>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
 

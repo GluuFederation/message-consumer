@@ -2,7 +2,7 @@ package org.gluu.message.consumer.domain.log4j;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by eugeniuparvan on 10/30/16.
@@ -17,14 +17,16 @@ public class LoggingEventBase<T extends LoggingEventExceptionBase> {
 
     private Date timestamp;
 
+    @Column(columnDefinition = "text")
     private String formattedMessage;
 
     private String loggerName;
 
     private String level;
 
+
     @OneToMany(mappedBy = "loggingEvent", cascade = CascadeType.ALL)
-    private Set<T> exceptions;
+    private List<T> exceptions;
 
     public Long getId() {
         return id;
@@ -66,11 +68,11 @@ public class LoggingEventBase<T extends LoggingEventExceptionBase> {
         this.level = level;
     }
 
-    public Set<T> getExceptions() {
+    public List<T> getExceptions() {
         return exceptions;
     }
 
-    public void setExceptions(Set<T> exceptions) {
+    public void setExceptions(List<T> exceptions) {
         this.exceptions = exceptions;
     }
 

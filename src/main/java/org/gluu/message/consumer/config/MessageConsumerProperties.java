@@ -9,24 +9,50 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "message-consumer", ignoreUnknownFields = false)
 public class MessageConsumerProperties {
-    
-    private String oauth2_audit = "";
 
-    private String oxauth_server = "";
+    private final BaseProperties oauth2_audit = new BaseProperties();
 
-    public String getOauth2_audit() {
+    private final BaseProperties oxauth_server = new BaseProperties();
+
+    public BaseProperties getOauth2_audit() {
         return oauth2_audit;
     }
 
-    public void setOauth2_audit(String oauth2_audit) {
-        this.oauth2_audit = oauth2_audit;
-    }
-
-    public String getOxauth_server() {
+    public BaseProperties getOxauth_server() {
         return oxauth_server;
     }
 
-    public void setOxauth_server(String oxauth_server) {
-        this.oxauth_server = oxauth_server;
+    public static class BaseProperties {
+
+        private String destination;
+
+        private int clear_logs_older_than;
+
+        private String cron_for_log_cleaner;
+
+        public String getDestination() {
+            return destination;
+        }
+
+        public void setDestination(String destination) {
+            this.destination = destination;
+        }
+
+        public int getClear_logs_older_than() {
+            return clear_logs_older_than;
+        }
+
+        public void setClear_logs_older_than(int clear_logs_older_than) {
+            this.clear_logs_older_than = clear_logs_older_than;
+        }
+
+        public String getCron_for_log_cleaner() {
+            return cron_for_log_cleaner;
+        }
+
+        public void setCron_for_log_cleaner(String cron_for_log_cleaner) {
+            this.cron_for_log_cleaner = cron_for_log_cleaner;
+        }
     }
+
 }
