@@ -29,7 +29,7 @@ public class OXAuthServerLoggingEventRepositoryTest extends RepositoryBase<OXAut
 
     @Test
     public void shouldReturnRepositoryIndex() throws Exception {
-        mockMvc.perform(get("/api")).andDo(print()).andExpect(status().isOk()).andExpect(
+        mockMvc.perform(get(getUrlPrefix())).andDo(print()).andExpect(status().isOk()).andExpect(
                 jsonPath("$._links.oxauth-server-logs").exists());
     }
 
@@ -37,7 +37,7 @@ public class OXAuthServerLoggingEventRepositoryTest extends RepositoryBase<OXAut
     public void shouldRetrieveEntity() throws Exception {
         OXAuthServerLoggingEvent oxAuthServerLoggingEvent = addDefaultLog();
 
-        String location = "/api/oxauth-server-logs/" + oxAuthServerLoggingEvent.getId();
+        String location = getUrlPrefix() + "/oxauth-server-logs/" + oxAuthServerLoggingEvent.getId();
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.formattedMessage").value(oxAuthServerLoggingEvent.getFormattedMessage()))
                 .andExpect(jsonPath("$.loggerName").value(oxAuthServerLoggingEvent.getLoggerName()))
@@ -46,7 +46,7 @@ public class OXAuthServerLoggingEventRepositoryTest extends RepositoryBase<OXAut
 
         oxAuthServerLoggingEvent = addDefaultLogWithException();
 
-        location = "/api/oxauth-server-logs/" + oxAuthServerLoggingEvent.getId();
+        location = getUrlPrefix() + "/oxauth-server-logs/" + oxAuthServerLoggingEvent.getId();
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.formattedMessage").value(oxAuthServerLoggingEvent.getFormattedMessage()))
                 .andExpect(jsonPath("$.loggerName").value(oxAuthServerLoggingEvent.getLoggerName()))
@@ -60,7 +60,7 @@ public class OXAuthServerLoggingEventRepositoryTest extends RepositoryBase<OXAut
         OXAuthServerLoggingEvent oxAuthServerLoggingEvent1 = addDefaultLog();
         OXAuthServerLoggingEvent oxAuthServerLoggingEvent2 = addLogWithParams("ERROR TEST", "logger_name", new Date(), "New_one");
 
-        String location = "/api/oxauth-server-logs/search/query?level=" + oxAuthServerLoggingEvent2.getLevel();
+        String location = getUrlPrefix() + "/oxauth-server-logs/search/query?level=" + oxAuthServerLoggingEvent2.getLevel();
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("1"))
                 .andExpect(jsonPath("$._embedded.oxauth-server-logs[0].formattedMessage").value(oxAuthServerLoggingEvent2.getFormattedMessage()))
@@ -68,11 +68,11 @@ public class OXAuthServerLoggingEventRepositoryTest extends RepositoryBase<OXAut
                 .andExpect(jsonPath("$._embedded.oxauth-server-logs[0].level").value(oxAuthServerLoggingEvent2.getLevel()))
                 .andExpect(jsonPath("$._embedded.oxauth-server-logs[0].exceptions").isEmpty());
 
-        location = "/api/oxauth-server-logs/search/query?formattedMessage=" + "e";
+        location = getUrlPrefix() + "/oxauth-server-logs/search/query?formattedMessage=" + "e";
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("2"));
 
-        location = "/api/oxauth-server-logs/search/query?formattedMessage=" + "ew";
+        location = getUrlPrefix() + "/oxauth-server-logs/search/query?formattedMessage=" + "ew";
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("1"))
                 .andExpect(jsonPath("$._embedded.oxauth-server-logs[0].formattedMessage").value(oxAuthServerLoggingEvent2.getFormattedMessage()))
@@ -80,7 +80,7 @@ public class OXAuthServerLoggingEventRepositoryTest extends RepositoryBase<OXAut
                 .andExpect(jsonPath("$._embedded.oxauth-server-logs[0].level").value(oxAuthServerLoggingEvent2.getLevel()))
                 .andExpect(jsonPath("$._embedded.oxauth-server-logs[0].exceptions").isEmpty());
 
-        location = "/api/oxauth-server-logs/search/query?formattedMessage=" + oxAuthServerLoggingEvent2.getFormattedMessage();
+        location = getUrlPrefix() + "/oxauth-server-logs/search/query?formattedMessage=" + oxAuthServerLoggingEvent2.getFormattedMessage();
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("1"))
                 .andExpect(jsonPath("$._embedded.oxauth-server-logs[0].formattedMessage").value(oxAuthServerLoggingEvent2.getFormattedMessage()))
@@ -88,7 +88,7 @@ public class OXAuthServerLoggingEventRepositoryTest extends RepositoryBase<OXAut
                 .andExpect(jsonPath("$._embedded.oxauth-server-logs[0].level").value(oxAuthServerLoggingEvent2.getLevel()))
                 .andExpect(jsonPath("$._embedded.oxauth-server-logs[0].exceptions").isEmpty());
 
-        location = "/api/oxauth-server-logs/search/query?loggerName=" + oxAuthServerLoggingEvent2.getLoggerName();
+        location = getUrlPrefix() + "/oxauth-server-logs/search/query?loggerName=" + oxAuthServerLoggingEvent2.getLoggerName();
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("1"))
                 .andExpect(jsonPath("$._embedded.oxauth-server-logs[0].formattedMessage").value(oxAuthServerLoggingEvent2.getFormattedMessage()))
@@ -96,11 +96,11 @@ public class OXAuthServerLoggingEventRepositoryTest extends RepositoryBase<OXAut
                 .andExpect(jsonPath("$._embedded.oxauth-server-logs[0].level").value(oxAuthServerLoggingEvent2.getLevel()))
                 .andExpect(jsonPath("$._embedded.oxauth-server-logs[0].exceptions").isEmpty());
 
-        location = "/api/oxauth-server-logs/search/query?fromDate=" + simpleDateFormat.format(oxAuthServerLoggingEvent2.getTimestamp());
+        location = getUrlPrefix() + "/oxauth-server-logs/search/query?fromDate=" + simpleDateFormat.format(oxAuthServerLoggingEvent2.getTimestamp());
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("1"));
 
-        location = "/api/oxauth-server-logs/search/query?fromDate=" + simpleDateFormat.format(oxAuthServerLoggingEvent1.getTimestamp());
+        location = getUrlPrefix() + "/oxauth-server-logs/search/query?fromDate=" + simpleDateFormat.format(oxAuthServerLoggingEvent1.getTimestamp());
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("2"));
 
@@ -108,27 +108,27 @@ public class OXAuthServerLoggingEventRepositoryTest extends RepositoryBase<OXAut
         calendar.setTime(oxAuthServerLoggingEvent2.getTimestamp());
         calendar.add(Calendar.DAY_OF_MONTH, 1);
 
-        location = "/api/oxauth-server-logs/search/query?fromDate=" + simpleDateFormat.format(calendar.getTime());
+        location = getUrlPrefix() + "/oxauth-server-logs/search/query?fromDate=" + simpleDateFormat.format(calendar.getTime());
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("0"));
 
         calendar.add(Calendar.DAY_OF_MONTH, -10);
 
-        location = "/api/oxauth-server-logs/search/query?fromDate=" + simpleDateFormat.format(calendar.getTime());
+        location = getUrlPrefix() + "/oxauth-server-logs/search/query?fromDate=" + simpleDateFormat.format(calendar.getTime());
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("2"));
 
 
-        location = "/api/oxauth-server-logs/search/query?toDate=" + simpleDateFormat.format(calendar.getTime());
+        location = getUrlPrefix() + "/oxauth-server-logs/search/query?toDate=" + simpleDateFormat.format(calendar.getTime());
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("0"));
 
         calendar.add(Calendar.DAY_OF_MONTH, 20);
-        location = "/api/oxauth-server-logs/search/query?toDate=" + simpleDateFormat.format(calendar.getTime());
+        location = getUrlPrefix() + "/oxauth-server-logs/search/query?toDate=" + simpleDateFormat.format(calendar.getTime());
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("2"));
 
-        location = "/api/oxauth-server-logs/search/query?level=" + oxAuthServerLoggingEvent2.getLevel() +
+        location = getUrlPrefix() + "/oxauth-server-logs/search/query?level=" + oxAuthServerLoggingEvent2.getLevel() +
                 "&formattedMessage=" + oxAuthServerLoggingEvent2.getFormattedMessage() +
                 "&fromDate=" + simpleDateFormat.format(oxAuthServerLoggingEvent2.getTimestamp()) +
                 "&toDate=" + simpleDateFormat.format(oxAuthServerLoggingEvent2.getTimestamp());

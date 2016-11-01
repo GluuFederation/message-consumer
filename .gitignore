@@ -15,6 +15,9 @@ target/
 *.iml
 *.ipr
 
+### Mac OS ###
+.DS_Store
+
 ### NetBeans ###
 nbproject/private/
 build/

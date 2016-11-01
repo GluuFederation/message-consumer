@@ -6,7 +6,7 @@ package org.gluu.message.consumer.config.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.core.io.ClassPathResource;
 
@@ -17,7 +17,7 @@ import java.util.Properties;
 /**
  * Utility class to load a Spring profile to be used as default
  * when there is no <code>spring.profiles.active</code> set in the environment or as command line argument.
- * If the value is not available in <code>application.yml</code> then <code>dev</code> profile will be used as default.
+ * If the value is not available in <code>application.properties</code> then <code>dev</code> profile will be used as default.
  */
 public final class DefaultProfileUtil {
 
@@ -28,7 +28,7 @@ public final class DefaultProfileUtil {
     private static final Properties BUILD_PROPERTIES = readProperties();
 
     /**
-     * Get a default profile from <code>application.yml</code>.
+     * Get a default profile from <code>application.properties</code>.
      */
     public static String getDefaultActiveProfiles() {
         if (BUILD_PROPERTIES != null) {
@@ -62,11 +62,12 @@ public final class DefaultProfileUtil {
      */
     private static Properties readProperties() {
         try {
-            YamlPropertiesFactoryBean factory = new YamlPropertiesFactoryBean();
-            factory.setResources(new ClassPathResource("config/application.yml"));
+            PropertiesFactoryBean factory = new PropertiesFactoryBean();
+            factory.setLocation(new ClassPathResource("config/application.properties"));
+            factory.afterPropertiesSet();
             return factory.getObject();
         } catch (Exception e) {
-            log.error("Failed to read application.yml to get default profile");
+            log.error("Failed to read application.properties to get default profile");
         }
         return null;
     }

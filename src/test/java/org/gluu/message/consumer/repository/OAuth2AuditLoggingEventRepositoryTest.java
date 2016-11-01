@@ -29,7 +29,7 @@ public class OAuth2AuditLoggingEventRepositoryTest extends RepositoryBase<OAuth2
 
     @Test
     public void shouldReturnRepositoryIndex() throws Exception {
-        mockMvc.perform(get("/api")).andDo(print()).andExpect(status().isOk()).andExpect(
+        mockMvc.perform(get(getUrlPrefix())).andDo(print()).andExpect(status().isOk()).andExpect(
                 jsonPath("$._links.oauth2-audit-logs").exists());
     }
 
@@ -37,7 +37,7 @@ public class OAuth2AuditLoggingEventRepositoryTest extends RepositoryBase<OAuth2
     public void shouldRetrieveEntity() throws Exception {
         OAuth2AuditLoggingEvent oAuth2AuditLoggingEvent = addDefaultLog();
 
-        String location = "/api/oauth2-audit-logs/" + oAuth2AuditLoggingEvent.getId();
+        String location = getUrlPrefix() + "/oauth2-audit-logs/" + oAuth2AuditLoggingEvent.getId();
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.ip").value(oAuth2AuditLoggingEvent.getIp()))
                 .andExpect(jsonPath("$.action").value(oAuth2AuditLoggingEvent.getAction()))
@@ -52,7 +52,7 @@ public class OAuth2AuditLoggingEventRepositoryTest extends RepositoryBase<OAuth2
         OAuth2AuditLoggingEvent oAuth2AuditLoggingEvent1 = addDefaultLog();
         OAuth2AuditLoggingEvent oAuth2AuditLoggingEvent2 = addLogWithParams("clientid1", "username1", "action1", "ip1", "scope1", true, new Date());
 
-        String location = "/api/oauth2-audit-logs/search/query?clientId=" + oAuth2AuditLoggingEvent2.getClientId();
+        String location = getUrlPrefix() + "/oauth2-audit-logs/search/query?clientId=" + oAuth2AuditLoggingEvent2.getClientId();
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("1"))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].ip").value(oAuth2AuditLoggingEvent2.getIp()))
@@ -61,7 +61,7 @@ public class OAuth2AuditLoggingEventRepositoryTest extends RepositoryBase<OAuth2
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].username").value(oAuth2AuditLoggingEvent2.getUsername()))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].scope").value(oAuth2AuditLoggingEvent2.getScope()))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].success").value(oAuth2AuditLoggingEvent2.getSuccess()));
-        location = "/api/oauth2-audit-logs/search/query?username=" + oAuth2AuditLoggingEvent2.getUsername();
+        location = getUrlPrefix() + "/oauth2-audit-logs/search/query?username=" + oAuth2AuditLoggingEvent2.getUsername();
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("1"))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].ip").value(oAuth2AuditLoggingEvent2.getIp()))
@@ -70,7 +70,7 @@ public class OAuth2AuditLoggingEventRepositoryTest extends RepositoryBase<OAuth2
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].username").value(oAuth2AuditLoggingEvent2.getUsername()))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].scope").value(oAuth2AuditLoggingEvent2.getScope()))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].success").value(oAuth2AuditLoggingEvent2.getSuccess()));
-        location = "/api/oauth2-audit-logs/search/query?ip=" + oAuth2AuditLoggingEvent2.getIp();
+        location = getUrlPrefix() + "/oauth2-audit-logs/search/query?ip=" + oAuth2AuditLoggingEvent2.getIp();
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("1"))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].ip").value(oAuth2AuditLoggingEvent2.getIp()))
@@ -79,7 +79,7 @@ public class OAuth2AuditLoggingEventRepositoryTest extends RepositoryBase<OAuth2
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].username").value(oAuth2AuditLoggingEvent2.getUsername()))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].scope").value(oAuth2AuditLoggingEvent2.getScope()))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].success").value(oAuth2AuditLoggingEvent2.getSuccess()));
-        location = "/api/oauth2-audit-logs/search/query?action=" + oAuth2AuditLoggingEvent2.getAction();
+        location = getUrlPrefix() + "/oauth2-audit-logs/search/query?action=" + oAuth2AuditLoggingEvent2.getAction();
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("1"))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].ip").value(oAuth2AuditLoggingEvent2.getIp()))
@@ -88,7 +88,7 @@ public class OAuth2AuditLoggingEventRepositoryTest extends RepositoryBase<OAuth2
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].username").value(oAuth2AuditLoggingEvent2.getUsername()))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].scope").value(oAuth2AuditLoggingEvent2.getScope()))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].success").value(oAuth2AuditLoggingEvent2.getSuccess()));
-        location = "/api/oauth2-audit-logs/search/query?scope=" + oAuth2AuditLoggingEvent2.getScope();
+        location = getUrlPrefix() + "/oauth2-audit-logs/search/query?scope=" + oAuth2AuditLoggingEvent2.getScope();
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("1"))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].ip").value(oAuth2AuditLoggingEvent2.getIp()))
@@ -97,13 +97,13 @@ public class OAuth2AuditLoggingEventRepositoryTest extends RepositoryBase<OAuth2
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].username").value(oAuth2AuditLoggingEvent2.getUsername()))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].scope").value(oAuth2AuditLoggingEvent2.getScope()))
                 .andExpect(jsonPath("$._embedded.oauth2-audit-logs[0].success").value(oAuth2AuditLoggingEvent2.getSuccess()));
-        location = "/api/oauth2-audit-logs/search/query?scope=scope";
+        location = getUrlPrefix() + "/oauth2-audit-logs/search/query?scope=scope";
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("2"));
-        location = "/api/oauth2-audit-logs/search/query?success=" + oAuth2AuditLoggingEvent2.getSuccess();
+        location = getUrlPrefix() + "/oauth2-audit-logs/search/query?success=" + oAuth2AuditLoggingEvent2.getSuccess();
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("2"));
-        location = "/api/oauth2-audit-logs/search/query?success=false";
+        location = getUrlPrefix() + "/oauth2-audit-logs/search/query?success=false";
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("0"));
 
@@ -111,28 +111,28 @@ public class OAuth2AuditLoggingEventRepositoryTest extends RepositoryBase<OAuth2
         calendar.setTime(oAuth2AuditLoggingEvent2.getTimestamp());
         calendar.add(Calendar.DAY_OF_MONTH, 1);
 
-        location = "/api/oauth2-audit-logs/search/query?fromDate=" + simpleDateFormat.format(calendar.getTime());
+        location = getUrlPrefix() + "/oauth2-audit-logs/search/query?fromDate=" + simpleDateFormat.format(calendar.getTime());
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("0"));
 
         calendar.add(Calendar.DAY_OF_MONTH, -10);
 
-        location = "/api/oauth2-audit-logs/search/query?fromDate=" + simpleDateFormat.format(calendar.getTime());
+        location = getUrlPrefix() + "/oauth2-audit-logs/search/query?fromDate=" + simpleDateFormat.format(calendar.getTime());
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("2"));
 
 
-        location = "/api/oauth2-audit-logs/search/query?toDate=" + simpleDateFormat.format(calendar.getTime());
+        location = getUrlPrefix() + "/oauth2-audit-logs/search/query?toDate=" + simpleDateFormat.format(calendar.getTime());
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("0"));
 
         calendar.add(Calendar.DAY_OF_MONTH, 20);
-        location = "/api/oauth2-audit-logs/search/query?toDate=" + simpleDateFormat.format(calendar.getTime());
+        location = getUrlPrefix() + "/oauth2-audit-logs/search/query?toDate=" + simpleDateFormat.format(calendar.getTime());
         mockMvc.perform(get(location)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements").value("2"));
 
 
-        location = "/api/oauth2-audit-logs/search/query?clientId=" + oAuth2AuditLoggingEvent2.getClientId() +
+        location = getUrlPrefix() + "/oauth2-audit-logs/search/query?clientId=" + oAuth2AuditLoggingEvent2.getClientId() +
                 "&username=" + oAuth2AuditLoggingEvent2.getUsername() +
                 "&action=" + oAuth2AuditLoggingEvent2.getAction() +
                 "&ip=" + oAuth2AuditLoggingEvent2.getIp() +

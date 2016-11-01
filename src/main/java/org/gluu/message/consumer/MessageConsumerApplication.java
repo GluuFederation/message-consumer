@@ -33,12 +33,14 @@ public class MessageConsumerApplication {
         Environment env = app.run(args).getEnvironment();
         log.info("\n----------------------------------------------------------\n\t" +
                         "Application '{}' is running! Access URLs:\n\t" +
-                        "Local: \t\thttp://127.0.0.1:{}\n\t" +
-                        "External: \thttp://{}:{}\n----------------------------------------------------------",
+                        "Local: \t\thttp{}://127.0.0.1:{}\n\t" +
+                        "External: \thttp{}://{}:{}\n----------------------------------------------------------",
                 env.getProperty("spring.application.name"),
-                env.getProperty("server.port"),
+                env.getProperty("server.ssl.key-store") == null ? "" : "s",
+                env.getProperty("server.port") + env.getProperty("spring.data.rest.base-path"),
+                env.getProperty("server.ssl.key-store") == null ? "" : "s",
                 InetAddress.getLocalHost().getHostAddress(),
-                env.getProperty("server.port"));
+                env.getProperty("server.port") + env.getProperty("spring.data.rest.base-path"));
     }
 
     /**
