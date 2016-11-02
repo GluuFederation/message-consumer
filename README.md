@@ -2,6 +2,7 @@
 ### Table of Contents 
 1. [About](https://github.com/GluuFederation/message-consumer#about)
 2. [How it works](https://github.com/GluuFederation/message-consumer#how-it-works)
+3. [Message format](https://github.com/GluuFederation/message-consumer#message-format)
 2. [External properties](https://github.com/GluuFederation/message-consumer#external-properties)
 3. [RESTful API](https://github.com/GluuFederation/message-consumer#restful-api)
 4. [Database schema](https://github.com/GluuFederation/message-consumer#database-schema)
@@ -12,6 +13,26 @@ The goal of this app to centralize all logs in one place and to provide a quick 
 This version is uses [activemq](http://activemq.apache.org/) messaging server and [postgresql](https://www.postgresql.org/) database to store logging data.
 
 #How it works
+At first the application tries to connect to activemq using the following url: `failover:(tcp://localhost:61616)?timeout=5000` (could be configured from application properties ).
+
+If connection to message broker succeeded, then the application starts two asynchronous receivers, which reads messages from: `oauth2.audit.logging` and `oxauth.server.logging` queues and stores them in database. It also exposes a discoverable REST API that helps *clients* to read and search through logging messages.
+
+At the same time the application starting scheduled tasks that must delete old messages from database. The cron expression and the number of days that messages must be stored, could be configured from application properties.
+
+#Message format
+Messages from `oauth2.audit.logging` queue are expected to be json string with the following properties:
+```
+{
+	"ip": "",
+	"timestamp": 1475571313788,
+	"clientId": "",
+	"action": "",
+	"username": "",
+	"scope": "",
+	"success": true
+}
+```
+Messages form `oxauth.server.logging` queue are expected to be objects: `org.apache.log4j.spi.LoggingEvent`. To send them [JMSQueueAppender](https://gist.github.com/worm333/fd60ed5535878c423c228ccb7617748e) could be used.
 
 #External properties
  Besides others standard spring boot properties, the following could also be customized:
