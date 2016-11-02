@@ -20,7 +20,7 @@ If connection to message broker succeeded, then the application starts two async
 At the same time the application starting scheduled tasks that must delete old messages from database. The cron expression and the number of days that messages must be stored, could be configured from application properties.
 
 #Message format
-Messages from `oauth2.audit.logging` queue are expected to be json string with the following properties:
+Messages from `oauth2.audit.logging` queue are expected to be json strings with the following properties:
 ```
 {
 	"ip": "",
