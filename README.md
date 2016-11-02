@@ -32,7 +32,7 @@ Messages from `oauth2.audit.logging` queue are expected to be json string with t
 	"success": true
 }
 ```
-Messages form `oxauth.server.logging` queue are expected to be objects: `org.apache.log4j.spi.LoggingEvent`. To send them [JMSQueueAppender](https://gist.github.com/worm333/fd60ed5535878c423c228ccb7617748e) could be used.
+Messages from `oxauth.server.logging` queue are expected to be objects: `org.apache.log4j.spi.LoggingEvent`. To send them [JMSQueueAppender](https://gist.github.com/worm333/fd60ed5535878c423c228ccb7617748e) could be used.
 
 #External properties
  Besides others standard spring boot properties, the following could also be customized:
