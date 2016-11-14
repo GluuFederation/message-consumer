@@ -6,6 +6,7 @@
 2. [External properties](https://github.com/GluuFederation/message-consumer#external-properties)
 3. [RESTful API](https://github.com/GluuFederation/message-consumer#restful-api)
 4. [Database schema](https://github.com/GluuFederation/message-consumer#database-schema)
+5. [Install and run activeMQ](https://github.com/GluuFederation/message-consumer#install-and-run-activemq)
 
 #About
 The goal of this app to centralize all logs in one place and to provide a quick access to logging data by exposing RESTful API for searching with custom conditions. Roots of this project are drawn to the following [issue](https://github.com/GluuFederation/oxAuth/issues/307).
@@ -171,3 +172,10 @@ Schema |                 Name                  | Type  | Owner
 ```
     "fktp5p28uolrsx6vlj6annm7255" FOREIGN KEY (oxauth_server_logging_event_id) REFERENCES oxauth_server_logging_event(id)
 ```
+
+#Install and run activeMQ
+1. Download the activemq zipped tarball file to the Unix machine, using either a browser or a tool, i.e., wget, scp, ftp, etc. (see [Download](http://activemq.apache.org/download.html) -> "The latest stable release")
+2. Extract archive, e.g: `tar -xvzf apache-activemq-x.x.x-bin.tar.gz`
+3. Edit `apache-activemq-x.x.x-bin.tar.gz/bin/env` to specify the location of your java installation using JAVA_HOME
+4. Run activeMQ, e.g: `apache-activemq-x.x.x-bin.tar.gz/bin/activemq start`
+5. Optional. Navigate to activeMQ console `http://localhost:8161/`.
