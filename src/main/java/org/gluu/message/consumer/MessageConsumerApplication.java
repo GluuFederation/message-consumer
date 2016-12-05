@@ -52,7 +52,7 @@ public class MessageConsumerApplication {
     public void initApplication() {
         log.info("Running with Spring profile(s) : {}", Arrays.toString(env.getActiveProfiles()));
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
-        if (activeProfiles.contains(Constants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(Constants.SPRING_PROFILE_PRODUCTION)) {
+        if (activeProfiles.contains(Constants.SPRING_PROFILE_DEVELOPMENT) && (activeProfiles.contains(Constants.SPRING_PROFILE_PRODUCTION_POSTGRESQL) && activeProfiles.contains(Constants.SPRING_PROFILE_PRODUCTION_MYSQL))) {
             log.error("You have misconfigured your application! It should not run " +
                     "with both the 'dev' and 'prod' profiles at the same time.");
         }

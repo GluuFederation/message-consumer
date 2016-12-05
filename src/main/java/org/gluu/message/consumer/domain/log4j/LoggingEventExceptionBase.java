@@ -13,8 +13,10 @@ public class LoggingEventExceptionBase<T extends LoggingEventBase> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "\"index\"")
     private Integer index;
 
+    @Column(columnDefinition = "text")
     private String traceLine;
 
     @ManyToOne
@@ -56,7 +58,7 @@ public class LoggingEventExceptionBase<T extends LoggingEventBase> {
     public String toString() {
         return "LoggingEventExceptionBase{" +
                 "id=" + id +
-                ", index=" + index +
+                ", traceLine=" + traceLine +
                 ", traceLine='" + traceLine + '\'' +
                 '}';
     }

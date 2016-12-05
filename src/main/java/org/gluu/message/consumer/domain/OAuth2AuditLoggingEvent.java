@@ -20,6 +20,8 @@ public class OAuth2AuditLoggingEvent {
 
     private String clientId;
 
+    private String macAddress;
+
     private String username;
 
     private String scope;
@@ -58,6 +60,14 @@ public class OAuth2AuditLoggingEvent {
 
     public void setClientId(String clientId) {
         this.clientId = clientId;
+    }
+
+    public String getMacAddress() {
+        return macAddress;
+    }
+
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
     }
 
     public String getUsername() {
@@ -99,6 +109,7 @@ public class OAuth2AuditLoggingEvent {
                 ", ip='" + ip + '\'' +
                 ", action='" + action + '\'' +
                 ", clientId='" + clientId + '\'' +
+                ", macAddress='" + macAddress + '\'' +
                 ", username='" + username + '\'' +
                 ", scope='" + scope + '\'' +
                 ", success=" + success +
