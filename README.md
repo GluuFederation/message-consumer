@@ -222,6 +222,7 @@ Edit `postgresql_schema.sql` to change databse Owner and postgresql user. Here i
 CREATE USER gluu WITH password 'root';
 \i ${path_to_file}/postgresql_schema.sql
 ```
+Note: update `spring.datasource.username` and `spring.datasource.password` in `application-prod-postgresql.properties` after creating new postgresql user.
 
 #Install and run activeMQ
 1. Download the activemq zipped tarball file to the Unix machine, using either a browser or a tool, i.e., wget, scp, ftp, etc. (see [Download](http://activemq.apache.org/download.html) -> "The latest stable release")
