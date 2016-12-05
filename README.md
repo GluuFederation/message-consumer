@@ -127,6 +127,7 @@ Schema |                 Name                  | Type  | Owner
  action    | character varying(255)      |           | extended |              |
  client_id | character varying(255)      |           | extended |              |
  ip        | character varying(255)      |           | extended |              |
+ mac_address| character varying(255)     |           | extended |              |
  scope     | character varying(255)      |           | extended |              |
  success   | boolean                     |           | plain    |              |
  timestamp | timestamp without time zone |           | plain    |              |
@@ -161,7 +162,7 @@ Schema |                 Name                  | Type  | Owner
 --------------------------------|:----------------------:|----------:|---------:|-------------:|-------------
  id                             | bigint                 | not null  | plain    |              |
  index                          | integer                |           | plain    |              |
- trace_line                     | character varying(255) |           | extended |              |
+ trace_line                     | text                   |           | extended |              |
  oxauth_server_logging_event_id | bigint                 |           | plain    |              |
  
 #####Indexes:
