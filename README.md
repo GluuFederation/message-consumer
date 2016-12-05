@@ -5,10 +5,11 @@
 3. [Message format](https://github.com/GluuFederation/message-consumer#message-format)
 2. [External properties](https://github.com/GluuFederation/message-consumer#external-properties)
 3. [RESTful API](https://github.com/GluuFederation/message-consumer#restful-api)
-4. [Database schema](https://github.com/GluuFederation/message-consumer#database-schema)
-5. [MySQL](https://github.com/GluuFederation/message-consumer#mysql)
-6. [PostgreSQL](https://github.com/GluuFederation/message-consumer#postgresql)
-7. [Install and run activeMQ](https://github.com/GluuFederation/message-consumer#install-and-run-activemq)
+4. [Install and run activeMQ](https://github.com/GluuFederation/message-consumer#install-and-run-activemq)
+5. [Database schema](https://github.com/GluuFederation/message-consumer#database-schema)
+6. [MySQL](https://github.com/GluuFederation/message-consumer#mysql)
+7. [PostgreSQL](https://github.com/GluuFederation/message-consumer#postgresql)
+8. [Building for production](https://github.com/GluuFederation/message-consumer#building-for-production)
 
 #About
 The goal of this app to centralize all logs in one place and to provide a quick access to logging data by exposing RESTful API for searching with custom conditions. Roots of this project are drawn to the following [issue](https://github.com/GluuFederation/oxAuth/issues/307).
@@ -200,3 +201,26 @@ CREATE USER gluu WITH password 'root';
 3. Edit `apache-activemq-x.x.x-bin.tar.gz/bin/env` to specify the location of your java installation using JAVA_HOME
 4. Run activeMQ, e.g: `apache-activemq-x.x.x-bin.tar.gz/bin/activemq start`
 5. Optional. Navigate to activeMQ console `http://localhost:8161/`.
+
+#Building and running
+Before running this app make sure that MySQL/PostgreSQL is running and schema is created and activeMQ is installed and running.
+
+message-consumer supports two production profiles: `prod-mysql` and `prod-postgresql`.
+
+Here is an example how to build and run project for MySQL:
+
+```
+git clone https://github.com/GluuFederation/message-consumer.git
+cd message-consumer/
+sudo mvn -Pprod-mysql clean package
+java -jar target/message-consumer-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod-mysql
+```
+
+Here is an example how to build and run project for PostgreSQL:
+
+```
+git clone https://github.com/GluuFederation/message-consumer.git
+cd message-consumer/
+sudo mvn -Pprod-postgresql clean package
+java -jar target/message-consumer-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod-postgresql
+```
