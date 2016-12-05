@@ -232,9 +232,8 @@ Note: update `spring.datasource.username` and `spring.datasource.password` in `a
 5. Optional. Navigate to activeMQ console `http://localhost:8161/`.
 
 #Building and running
-Before running this app make sure that MySQL/PostgreSQL is running and schema is created and activeMQ is installed and running.
-
-message-consumer supports two production profiles: `prod-mysql` and `prod-postgresql`.
+[message-consumer](https://github.com/GluuFederation/message-consumer) supports two production profiles: `prod-mysql` and `prod-postgresql`.
+Before running this app make sure that MySQL/PostgreSQL is running and schema is created and activeMQ is installed and running. Also check the configuration from `application-{profile}.properties`, make sure that connection properties to activeMQ and database are correct.
 
 Here is an example how to build and run project for MySQL:
 
