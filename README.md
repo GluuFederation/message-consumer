@@ -3,23 +3,24 @@
 1. [About](https://github.com/GluuFederation/message-consumer#about)
 2. [How it works](https://github.com/GluuFederation/message-consumer#how-it-works)
 3. [Message format](https://github.com/GluuFederation/message-consumer#message-format)
-2. [External properties](https://github.com/GluuFederation/message-consumer#external-properties)
-3. [RESTful API](https://github.com/GluuFederation/message-consumer#restful-api)
-4. [Install and run activeMQ](https://github.com/GluuFederation/message-consumer#install-and-run-activemq)
-5. [Database schema](https://github.com/GluuFederation/message-consumer#database-schema)
-6. [MySQL](https://github.com/GluuFederation/message-consumer#mysql)
-7. [PostgreSQL](https://github.com/GluuFederation/message-consumer#postgresql)
-8. [Building for production](https://github.com/GluuFederation/message-consumer#building-for-production)
+4. [Configure oxauth-server logging](https://github.com/GluuFederation/message-consumer#configure-oxauth-server-logging)
+5. [External properties](https://github.com/GluuFederation/message-consumer#external-properties)
+6. [RESTful API](https://github.com/GluuFederation/message-consumer#restful-api)
+7. [Install and run activeMQ](https://github.com/GluuFederation/message-consumer#install-and-run-activemq)
+8. [Database schema](https://github.com/GluuFederation/message-consumer#database-schema)
+9. [MySQL](https://github.com/GluuFederation/message-consumer#mysql)
+10. [PostgreSQL](https://github.com/GluuFederation/message-consumer#postgresql)
+11. [Building for production](https://github.com/GluuFederation/message-consumer#building-for-production)
 
 #About
 The goal of this app to centralize all logs in one place and to provide a quick access to logging data by exposing RESTful API for searching with custom conditions. Roots of this project are drawn to the following [issue](https://github.com/GluuFederation/oxAuth/issues/307).
 
-This version is uses [activemq](http://activemq.apache.org/) messaging server and [postgresql](https://www.postgresql.org/) database to store logging data.
+This version is uses [activemq](http://activemq.apache.org/) messaging server and [postgresql](https://www.postgresql.org/) or [mysql](https://www.mysql.com/) (up to your choice) database to store logging data.
 
 #How it works
 At first the application tries to connect to activemq using the following url: `failover:(tcp://localhost:61616)?timeout=5000` (could be configured from application properties ).
 
-If connection to message broker succeeded, then the application starts two asynchronous receivers, which reads messages from: `oauth2.audit.logging` and `oxauth.server.logging` queues and stores them in database. It also exposes a discoverable REST API that helps *clients* to read and search through logging messages.
+If connection to message broker succeeded, then the application starts two asynchronous receivers, which reads messages from: `oauth2.audit.logging` and `oxauth.server.logging` (could be modified in `application-{profile}.properties`) queues and stores them in database. It also exposes a discoverable REST API that helps *clients* to read and search through logging messages.
 
 At the same time the application starting scheduled tasks that must delete old messages from database. The cron expression and the number of days that messages must be stored, could be configured from application properties.
 
@@ -38,6 +39,33 @@ Messages from `oauth2.audit.logging` queue are expected to be json strings with 
 }
 ```
 Messages from `oxauth.server.logging` queue are expected to be objects: `org.apache.log4j.spi.LoggingEvent`. To send them [JMSQueueAppender](https://gist.github.com/worm333/fd60ed5535878c423c228ccb7617748e) could be used.
+
+#Configure oxauth-server logging
+To configure [oxauth-server](https://github.com/GluuFederation/oxAuth/tree/master/Server) to send logging messages via JMS, the following steps must be performed:
+* add [JMSQueueAppender](https://gist.github.com/worm333/fd60ed5535878c423c228ccb7617748e) somewhere into classpath of [oxauth-server](https://github.com/GluuFederation/oxAuth/tree/master/Server)
+* add the appender into [log4j.xml](https://github.com/GluuFederation/oxAuth/blob/master/Server/src/main/resources/log4j.xml), e.g.:
+
+```
+    <appender name="JMS" class="org.xdi.oxauth.audit.JMSQueueAppender">
+		<param name="InitialContextFactoryName"
+			value="org.apache.activemq.jndi.ActiveMQInitialContextFactory" />
+		<param name="ProviderURL" value="tcp://localhost:61616"/>
+		<param name="QueueBindingName" value="server" />
+		<param name="QueueConnectionFactoryBindingName" value="ConnectionFactory" />
+		<param name="UserName" value="admin" />
+		<param name="Password" value="admin" />
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- The default pattern: Date Priority [Category] (Thread) Message\n -->
+			<param name="ConversionPattern" value="%d %-5p [%c{6}] (%t) %m%n" />
+		</layout>
+	</appender>
+```
+* add `<appender-ref ref="JMS"/>` to the `root` tag in [log4j.xml](https://github.com/GluuFederation/oxAuth/blob/master/Server/src/main/resources/log4j.xml) .
+* create `jndi.properties` in [resources folder](https://github.com/GluuFederation/oxAuth/tree/master/Server/src/main/resources) with the following content:
+```
+    queue.server=oxauth.server.logging
+```
 
 #External properties
  Besides others standard spring boot properties, the following could also be customized:
