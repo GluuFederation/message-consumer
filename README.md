@@ -6,7 +6,9 @@
 2. [External properties](https://github.com/GluuFederation/message-consumer#external-properties)
 3. [RESTful API](https://github.com/GluuFederation/message-consumer#restful-api)
 4. [Database schema](https://github.com/GluuFederation/message-consumer#database-schema)
-5. [Install and run activeMQ](https://github.com/GluuFederation/message-consumer#install-and-run-activemq)
+5. [MySQL](https://github.com/GluuFederation/message-consumer#mysql)
+6. [PostgreSQL](https://github.com/GluuFederation/message-consumer#postgresql)
+7. [Install and run activeMQ](https://github.com/GluuFederation/message-consumer#install-and-run-activemq)
 
 #About
 The goal of this app to centralize all logs in one place and to provide a quick access to logging data by exposing RESTful API for searching with custom conditions. Roots of this project are drawn to the following [issue](https://github.com/GluuFederation/oxAuth/issues/307).
@@ -24,13 +26,14 @@ At the same time the application starting scheduled tasks that must delete old m
 Messages from `oauth2.audit.logging` queue are expected to be json strings with the following properties:
 ```
 {
-	"ip": "",
-	"timestamp": 1475571313788,
-	"clientId": "",
-	"action": "",
-	"username": "",
-	"scope": "",
-	"success": true
+	"ip" : "",
+	"action" : "",
+	"timestamp" : 1480935174312,
+	"macAddress" : "",
+	"clientId" : "",
+	"username" : "",
+	"scope" : "",
+	"success" : true
 }
 ```
 Messages from `oxauth.server.logging` queue are expected to be objects: `org.apache.log4j.spi.LoggingEvent`. To send them [JMSQueueAppender](https://gist.github.com/worm333/fd60ed5535878c423c228ccb7617748e) could be used.
@@ -172,6 +175,23 @@ Schema |                 Name                  | Type  | Owner
 #####Foreign-key constraints:
 ```
     "fktp5p28uolrsx6vlj6annm7255" FOREIGN KEY (oxauth_server_logging_event_id) REFERENCES oxauth_server_logging_event(id)
+```
+
+#MySQL
+To create schema for MySQL use [mysql-schema.sql](https://github.com/GluuFederation/message-consumer/blob/master/schema/mysql_schema.sql).
+
+```
+source ${path_to_file}/mysql_schema.sql
+```
+
+#PostgreSQL
+To create schema for PostgreSQL use [postgresql_schema.sql](https://github.com/GluuFederation/message-consumer/blob/master/schema/postgresql_schema.sql).
+
+Edit `postgresql_schema.sql` to change databse Owner and postgresql user. Here is example how to create `gluu` user and create database schema:
+
+```
+CREATE USER gluu WITH password 'root';
+\i ${path_to_file}/postgresql_schema.sql
 ```
 
 #Install and run activeMQ
