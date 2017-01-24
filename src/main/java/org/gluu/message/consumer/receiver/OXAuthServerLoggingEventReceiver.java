@@ -1,7 +1,8 @@
 package org.gluu.message.consumer.receiver;
 
-import org.apache.log4j.spi.LoggingEvent;
-import org.apache.log4j.spi.ThrowableInformation;
+import org.apache.logging.log4j.core.impl.ExtendedStackTraceElement;
+import org.apache.logging.log4j.core.impl.Log4jLogEvent;
+import org.apache.logging.log4j.core.impl.ThrowableProxy;
 import org.gluu.message.consumer.domain.log4j.OXAuthServerLoggingEvent;
 import org.gluu.message.consumer.domain.log4j.OXAuthServerLoggingEventException;
 import org.gluu.message.consumer.repository.OXAuthServerLoggingEventRepository;
@@ -27,22 +28,22 @@ public class OXAuthServerLoggingEventReceiver {
     private OXAuthServerLoggingEventRepository repository;
 
     @JmsListener(destination = "${message-consumer.oxauth-server.destination}")
-    public void onMessage(LoggingEvent loggingEvent) {
+    public void onMessage(Log4jLogEvent loggingEvent) {
         log.info("Message from oxauth.server: " + loggingEvent.getMessage());
         OXAuthServerLoggingEvent oxAuthServerLoggingEvent = new OXAuthServerLoggingEvent();
         oxAuthServerLoggingEvent.setLevel(loggingEvent.getLevel().toString());
         oxAuthServerLoggingEvent.setLoggerName(loggingEvent.getLoggerName());
-        oxAuthServerLoggingEvent.setTimestamp(new Date(loggingEvent.getTimeStamp()));
+        oxAuthServerLoggingEvent.setTimestamp(new Date(loggingEvent.getTimeMillis()));
         oxAuthServerLoggingEvent.setFormattedMessage(loggingEvent.getMessage().toString());
 
-        ThrowableInformation throwableInformation = loggingEvent.getThrowableInformation();
-        if (throwableInformation != null && throwableInformation.getThrowableStrRep().length > 0) {
+        ThrowableProxy throwableInformation = loggingEvent.getThrownProxy();
+        if (throwableInformation != null && throwableInformation.getExtendedStackTrace().length > 0) {
             List<OXAuthServerLoggingEventException> exceptions = new ArrayList<>();
             int index = 0;
-            for (String traceLine : throwableInformation.getThrowableStrRep()) {
+            for (ExtendedStackTraceElement stackTraceElement : throwableInformation.getExtendedStackTrace()) {
                 OXAuthServerLoggingEventException oxAuthServerLoggingEventException = new OXAuthServerLoggingEventException();
                 oxAuthServerLoggingEventException.setIndex(index++);
-                oxAuthServerLoggingEventException.setTraceLine(traceLine);
+                oxAuthServerLoggingEventException.setTraceLine(stackTraceElement.toString());
                 oxAuthServerLoggingEventException.setLoggingEvent(oxAuthServerLoggingEvent);
                 exceptions.add(oxAuthServerLoggingEventException);
             }
