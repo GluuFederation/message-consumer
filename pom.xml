@@ -87,6 +87,9 @@
             <properties>
                 <spring.profiles.active>dev</spring.profiles.active>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <dependencies>
                 <dependency>
                     <groupId>com.h2database</groupId>
