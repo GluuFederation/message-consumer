@@ -226,7 +226,7 @@ Note: update `spring.datasource.username` and `spring.datasource.password` in `a
 #Building and running
 [message-consumer](https://github.com/GluuFederation/message-consumer) supports three production profiles: `prod`, `prod-mysql` and `prod-postgresql`.
 
-1. `prod` profile contains dependencies to both postgresql and mysql database connectors. To select required database you need pass `--database` property to command line with the following values: `postgresql` or `mysql`.
+1. `prod` profile contains dependencies to both postgresql and mysql database connectors. To select required database you need to pass `--database` property to the command line with the following values: `postgresql` or `mysql`.
 2. `prod-mysql` profile contains dependency only for mysql database connector.
 3. `prod-postgresql` profile contains dependency only for postgresql database connector.
 
