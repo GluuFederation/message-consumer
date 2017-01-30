@@ -40,8 +40,13 @@ public class OXAuthServerLoggingEventReceiver {
         if (throwableInformation != null && throwableInformation.getExtendedStackTrace().length > 0) {
             List<OXAuthServerLoggingEventException> exceptions = new ArrayList<>();
             int index = 0;
+            OXAuthServerLoggingEventException oxAuthServerLoggingEventException = new OXAuthServerLoggingEventException();
+            oxAuthServerLoggingEventException.setIndex(index++);
+            oxAuthServerLoggingEventException.setTraceLine(throwableInformation.toString());
+            oxAuthServerLoggingEventException.setLoggingEvent(oxAuthServerLoggingEvent);
+            exceptions.add(oxAuthServerLoggingEventException);
             for (ExtendedStackTraceElement stackTraceElement : throwableInformation.getExtendedStackTrace()) {
-                OXAuthServerLoggingEventException oxAuthServerLoggingEventException = new OXAuthServerLoggingEventException();
+                oxAuthServerLoggingEventException = new OXAuthServerLoggingEventException();
                 oxAuthServerLoggingEventException.setIndex(index++);
                 oxAuthServerLoggingEventException.setTraceLine(stackTraceElement.toString());
                 oxAuthServerLoggingEventException.setLoggingEvent(oxAuthServerLoggingEvent);

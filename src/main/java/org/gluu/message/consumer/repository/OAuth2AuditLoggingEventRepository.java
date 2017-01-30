@@ -24,10 +24,10 @@ public interface OAuth2AuditLoggingEventRepository extends PagingAndSortingRepos
             "AND (:clientId IS NULL OR log.clientId = :clientId) " +
             "AND (:action IS NULL OR log.action = :action) " +
             "AND (:username IS NULL OR log.username = :username) " +
-            "AND (cast(:scope as text) IS NULL OR log.scope LIKE CONCAT ('%', cast(:scope as text), '%')) " +
+            "AND (:scope IS NULL OR LOWER(log.scope) LIKE CONCAT ('%', LOWER(CAST(:scope as string)), '%')) " +
             "AND (:success IS NULL OR log.success = :success) " +
-            "AND (cast(:fromDate as date) IS NULL OR log.timestamp >= :fromDate) " +
-            "AND (cast(:toDate as date) IS NULL OR log.timestamp <= :toDate) ")
+            "AND (CAST(:fromDate as date) IS NULL OR log.timestamp >= :fromDate) " +
+            "AND (CAST(:toDate as date) IS NULL OR log.timestamp <= :toDate) ")
     Page<OAuth2AuditLoggingEvent> query(@Param("ip") String ip, @Param("clientId") String clientId,
                                         @Param("action") String action, @Param("username") String username,
                                         @Param("scope") String scope, @Param("success") Boolean success,

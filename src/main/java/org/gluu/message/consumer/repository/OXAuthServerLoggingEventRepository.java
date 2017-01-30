@@ -22,9 +22,9 @@ public interface OXAuthServerLoggingEventRepository extends PagingAndSortingRepo
 
     @Query("SELECT log FROM OXAuthServerLoggingEvent log WHERE (:level IS NULL OR log.level = :level) " +
             "AND (:loggerName IS NULL OR log.loggerName = :loggerName) " +
-            "AND (cast(:formattedMessage as text) IS NULL OR log.formattedMessage LIKE CONCAT ('%', cast(:formattedMessage as text), '%')) " +
-            "AND (cast(:fromDate as date) IS NULL OR log.timestamp >= :fromDate) " +
-            "AND (cast(:toDate as date) IS NULL OR log.timestamp <= :toDate) ")
+            "AND (:formattedMessage IS NULL OR LOWER(log.formattedMessage) LIKE CONCAT ('%', LOWER(CAST(:formattedMessage as string)), '%')) " +
+            "AND (CAST(:fromDate as date) IS NULL OR log.timestamp >= :fromDate) " +
+            "AND (CAST(:toDate as date) IS NULL OR log.timestamp <= :toDate) ")
     Page<OXAuthServerLoggingEvent> query(@Param("level") String level, @Param("loggerName") String loggerName,
                                          @Param("formattedMessage") String formattedMessage,
                                          @Param("fromDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS") Date fromDate,

@@ -36,7 +36,8 @@ public final class DefaultProfileUtil {
             if (activeProfile != null && !activeProfile.isEmpty() &&
                     (activeProfile.contains(Constants.SPRING_PROFILE_DEVELOPMENT) ||
                             activeProfile.contains(Constants.SPRING_PROFILE_PRODUCTION_POSTGRESQL) ||
-                            activeProfile.contains(Constants.SPRING_PROFILE_PRODUCTION_MYSQL))) {
+                            activeProfile.contains(Constants.SPRING_PROFILE_PRODUCTION_MYSQL) ||
+                            activeProfile.contains(Constants.SPRING_PROFILE_PRODUCTION))) {
                 return activeProfile;
             }
         }
