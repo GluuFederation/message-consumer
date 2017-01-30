@@ -224,8 +224,28 @@ Note: update `spring.datasource.username` and `spring.datasource.password` in `a
 5. Optional. Navigate to activeMQ console `http://localhost:8161/`.
 
 #Building and running
-[message-consumer](https://github.com/GluuFederation/message-consumer) supports two production profiles: `prod-mysql` and `prod-postgresql`.
+[message-consumer](https://github.com/GluuFederation/message-consumer) supports three production profiles: `prod`, `prod-mysql` and `prod-postgresql`.
+1. `prod` profile contains dependencies to both postgresql and mysql database connectors. To select required database you need pass `--database` property to command line with the following values: `postgresql` or `mysql`.
+2. `prod-mysql` profile contains dependency only for mysql database connector.
+3. `prod-postgresql` profile contains dependency only for postgresql database connector.
+
 Before running this app make sure that MySQL/PostgreSQL is running and schema is created and activeMQ is installed and running. Also check the configuration from `application-{profile}.properties`, make sure that connection properties to activeMQ and database are correct.
+
+Here is an example how to build and run project for both PostgreSQL and MySQL:
+
+```
+git clone https://github.com/GluuFederation/message-consumer.git
+cd message-consumer/
+sudo mvn -Pprod clean package
+```
+run message-consumer for postgresql
+```
+java -jar target/message-consumer-0.0.1-SNAPSHOT.jar --database=postgresql
+```
+run message-consumer for mysql
+```
+java -jar target/message-consumer-0.0.1-SNAPSHOT.jar --database=mysql
+```
 
 Here is an example how to build and run project for MySQL:
 
@@ -233,7 +253,7 @@ Here is an example how to build and run project for MySQL:
 git clone https://github.com/GluuFederation/message-consumer.git
 cd message-consumer/
 sudo mvn -Pprod-mysql clean package
-java -jar target/message-consumer-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod-mysql
+java -jar target/message-consumer-0.0.1-SNAPSHOT.jar
 ```
 
 Here is an example how to build and run project for PostgreSQL:
@@ -242,5 +262,5 @@ Here is an example how to build and run project for PostgreSQL:
 git clone https://github.com/GluuFederation/message-consumer.git
 cd message-consumer/
 sudo mvn -Pprod-postgresql clean package
-java -jar target/message-consumer-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod-postgresql
+java -jar target/message-consumer-0.0.1-SNAPSHOT.jar
 ```
