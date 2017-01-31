@@ -224,7 +224,7 @@ Note: update `spring.datasource.username` and `spring.datasource.password` in `a
 5. Optional. Navigate to activeMQ console `http://localhost:8161/`.
 
 #Building and running
-[message-consumer](https://github.com/GluuFederation/message-consumer) supports four production profiles: `dev` `prod`, `prod-mysql` and `prod-postgresql`.
+[message-consumer](https://github.com/GluuFederation/message-consumer) supports four production profiles: `dev`, `prod`, `prod-mysql` and `prod-postgresql`.
 
 0. `dev` profile includes in-memory h2 database and also write logs to the file( by default filename is message-consumer.log and filepath is the same directory from which the application was launched). H2 console could be accessed from `/h2-console` uri(JDBC URL is `jdbc:h2:mem:gluu_log;DB_CLOSE_DELAY=-1`). Log filename and path could be configured by providing `--logging.file` and `--logging.path` as additional console params (e.g: `java -jar target/message-consumer-0.0.1-SNAPSHOT.jar --logging.file=message-consumer.log --logging.path=.`).
 1. `prod` profile contains dependencies to both postgresql and mysql database connectors. To select required database you need to pass `--database` property to the command line with the following values: `postgresql` or `mysql`.
