@@ -1,13 +1,17 @@
 package org.gluu.message.consumer.receiver;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.core.impl.ExtendedStackTraceElement;
 import org.apache.logging.log4j.core.impl.Log4jLogEvent;
 import org.apache.logging.log4j.core.impl.ThrowableProxy;
+import org.gluu.message.consumer.config.util.Constants;
 import org.gluu.message.consumer.domain.log4j.OXAuthServerLoggingEvent;
 import org.gluu.message.consumer.domain.log4j.OXAuthServerLoggingEventException;
 import org.gluu.message.consumer.repository.OXAuthServerLoggingEventRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
@@ -22,14 +26,19 @@ import java.util.List;
 @Component
 public class OXAuthServerLoggingEventReceiver {
 
-    private static final Logger log = LoggerFactory.getLogger(OXAuthServerLoggingEventReceiver.class);
+    private static final Logger logger = LoggerFactory.getLogger(OXAuthServerLoggingEventReceiver.class);
+
+    @Inject
+    private Environment environment;
+
+    @Inject
+    private ObjectMapper objectMapper;
 
     @Inject
     private OXAuthServerLoggingEventRepository repository;
 
     @JmsListener(destination = "${message-consumer.oxauth-server.destination}")
     public void onMessage(Log4jLogEvent loggingEvent) {
-        log.info("Message from oxauth.server: " + loggingEvent.getMessage());
         OXAuthServerLoggingEvent oxAuthServerLoggingEvent = new OXAuthServerLoggingEvent();
         oxAuthServerLoggingEvent.setLevel(loggingEvent.getLevel().toString());
         oxAuthServerLoggingEvent.setLoggerName(loggingEvent.getLoggerName());
@@ -53,6 +62,13 @@ public class OXAuthServerLoggingEventReceiver {
                 exceptions.add(oxAuthServerLoggingEventException);
             }
             oxAuthServerLoggingEvent.setExceptions(exceptions);
+        }
+        if (environment.acceptsProfiles(Constants.SPRING_PROFILE_DEVELOPMENT)){
+            try {
+                logger.info(objectMapper.writeValueAsString(oxAuthServerLoggingEvent));
+            } catch (JsonProcessingException e) {
+                logger.error("Can't parse oxAuthServerLoggingEvent", e);
+            }
         }
         repository.save(oxAuthServerLoggingEvent);
     }

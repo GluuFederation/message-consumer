@@ -1,5 +1,7 @@
 package org.gluu.message.consumer.domain.log4j;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -20,6 +22,7 @@ public class LoggingEventExceptionBase<T extends LoggingEventBase> {
     private String traceLine;
 
     @ManyToOne
+    @JsonIgnore
     private T loggingEvent;
 
     public Long getId() {

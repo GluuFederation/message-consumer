@@ -12,6 +12,5 @@ public final class Constants {
     public static final String SPRING_PROFILE_PRODUCTION_MYSQL = "prod-mysql";
     public static final String SPRING_PROFILE_PRODUCTION = "prod";
 
-    private Constants() {
-    }
+    private Constants() {}
 }
