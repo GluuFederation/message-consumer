@@ -37,7 +37,7 @@ public class OAuth2AuditLoggingEventReceiver {
             repository.save(oAuth2AuditLoggingEvent);
 
             if (environment.acceptsProfiles(Constants.SPRING_PROFILE_DEVELOPMENT))
-                logger.info(message);
+                logger.info(message.replace("\n", "").replace("\r", ""));
         } catch (IOException e) {
             logger.error("Could not deserialize the message.", e);
         }
