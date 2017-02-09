@@ -54,7 +54,7 @@ To configure [oxauth-server](https://github.com/GluuFederation/oxAuth/tree/maste
 	</JMS>
 
 ```
-and `<AppenderRef ref="jmsQueue"/>` to the `root` tag in the [log4j2.xml](https://github.com/GluuFederation/oxAuth/blob/master/Server/src/main/resources/log42j.xml) file.
+and `<AppenderRef ref="jmsQueue"/>` to the `root` tag in the [log4j2.xml](https://github.com/GluuFederation/oxAuth/blob/master/Server/src/main/resources/log4j2.xml) file.
 
 
 More about [JMSAppender](https://github.com/apache/logging-log4j2/blob/master/log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/JmsAppender.java) you can read [here](https://logging.apache.org/log4j/2.x/manual/appenders.html#JMSAppender).
