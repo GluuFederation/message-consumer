@@ -12,19 +12,19 @@
 10. [PostgreSQL](https://github.com/GluuFederation/message-consumer#postgresql)
 11. [Building and running](https://github.com/GluuFederation/message-consumer#building-and-running)
 
-#About
+# About
 The goal of this app to centralize all logs in one place and to provide a quick access to logging data by exposing RESTful API for searching with custom conditions. Roots of this project are drawn to the following [issue](https://github.com/GluuFederation/oxAuth/issues/307).
 
 This version is uses [activemq](http://activemq.apache.org/) messaging server and [postgresql](https://www.postgresql.org/) or [mysql](https://www.mysql.com/) (up to your choice) database to store logging data.
 
-#How it works
+# How it works
 At first the application tries to connect to activemq using the following url: `failover:(tcp://localhost:61616)?timeout=5000` (could be configured from application properties ).
 
 If connection to message broker succeeded, then the application starts two asynchronous receivers, which reads messages from: `oauth2.audit.logging` and `oxauth.server.logging` (could be modified in `application-{profile}.properties`) queues and stores them in database. It also exposes a discoverable REST API that helps *clients* to read and search through logging messages.
 
 At the same time the application starting scheduled tasks that must delete old messages from database. The cron expression and the number of days that messages must be stored, could be configured from application properties.
 
-#Message format
+# Message format
 Messages from `oauth2.audit.logging` queue are expected to be json strings with the following properties:
 ```
 {
@@ -40,7 +40,7 @@ Messages from `oauth2.audit.logging` queue are expected to be json strings with 
 ```
 Messages from `oxauth.server.logging` queue are expected to be objects: `org.apache.log4j.spi.LoggingEvent`. To send them [JMSQueueAppender](https://gist.github.com/worm333/fd60ed5535878c423c228ccb7617748e) could be used.
 
-#Configure oxauth-server logging
+# Configure oxauth-server logging
 To configure [oxauth-server](https://github.com/GluuFederation/oxAuth/tree/master/Server) to send logging messages via JMS, just add JMSAppender into [log4j2.xml](https://github.com/GluuFederation/oxAuth/blob/master/Server/src/main/resources/log4j2.xml) e.g:
 
 ```
@@ -59,7 +59,7 @@ and `<AppenderRef ref="jmsQueue"/>` to the `root` tag in the [log4j2.xml](https:
 
 More about [JMSAppender](https://github.com/apache/logging-log4j2/blob/master/log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/JmsAppender.java) you can read [here](https://logging.apache.org/log4j/2.x/manual/appenders.html#JMSAppender).
 
-#External properties
+# External properties
  Besides others standard spring boot properties, the following could also be customized:
  * `message-consumer.oauth2-audit.destination` - defines activemq queue name for oauth2 audit logging
  * `message-consumer.oauth2-audit.days-after-logs-can-be-deleted` - defines how many days the oauth2 audit logging data should be kept
@@ -68,7 +68,7 @@ More about [JMSAppender](https://github.com/apache/logging-log4j2/blob/master/lo
  * `message-consumer.oxauth-server.days-after-logs-can-be-deleted` - defines how many days the oxauth server logging data should be kept
  * `message-consumer.oxauth-server.cron-for-log-cleaner` - defines cron expression for oxauth server logging data cleaner
  
-#RESTful API
+# RESTful API
 **Important notes**.
 
 In order to perform search by date the following date format `yyyy-MM-dd HH:mm:ss.SSS` MUST be used, e.g:`/api/oauth2-audit-logs/search/query?fromDate=2016-10-03%2015:53:47.509`.
@@ -88,7 +88,7 @@ Default page size for all requests is 20, and max page size is 100. These proper
     
     
     
-#####Example:
+##### Example:
 `curl http://localhost:8080/api/oauth2-audit-logs/search/query?ip=10.0.2.2&username=admin&scope=openid&size=1`
 ```
 {
@@ -134,9 +134,9 @@ Default page size for all requests is 20, and max page size is 100. These proper
 }
 ```
 
-#Database schema
+# Database schema
 
-##List of relations
+## List of relations
 Schema |                 Name                  | Type  | Owner
 --------|:------------------------------------:|------:|-------
  public | oauth2_audit_logging_event            | table | gluu
@@ -144,7 +144,7 @@ Schema |                 Name                  | Type  | Owner
  public | oxauth_server_logging_event_exception | table | gluu
  
 
-##oauth2_audit_logging_event
+## oauth2_audit_logging_event
   Column   |            Type             | Modifiers | Storage  | Stats target | Description
 -----------|:---------------------------:|----------:|---------:|-------------:|-------------
  id        | bigint                      | not null  | plain    |              |
@@ -156,13 +156,13 @@ Schema |                 Name                  | Type  | Owner
  success   | boolean                     |           | plain    |              |
  timestamp | timestamp without time zone |           | plain    |              |
  username  | character varying(255)      |           | extended |              |
-#####Indexes:
+##### Indexes:
 ```
     "oauth2_audit_logging_event_pkey" PRIMARY KEY, btree (id)
     "oauth2_audit_logging_event_timestamp" btree ("timestamp")
 ```
 
-##oxauth_server_logging_event
+## oxauth_server_logging_event
       Column       |            Type             | Modifiers | Storage  | Stats target | Description
 -------------------|:---------------------------:|----------:|---------:|-------------:|-------------
  id                | bigint                      | not null  | plain    |              |
@@ -170,17 +170,17 @@ Schema |                 Name                  | Type  | Owner
  level             | character varying(255)      |           | extended |              |
  logger_name       | character varying(255)      |           | extended |              |
  timestamp         | timestamp without time zone |           | plain    |              |
-#####Indexes:
+##### Indexes:
 ```
     "oxauth_server_logging_event_pkey" PRIMARY KEY, btree (id)
     "oxauth_server_logging_event_timestamp" btree ("timestamp")
 ```
-#####Referenced by:
+##### Referenced by:
 ```
     TABLE "oxauth_server_logging_event_exception" CONSTRAINT "fktp5p28uolrsx6vlj6annm7255" FOREIGN KEY (oxauth_server_logging_event_id) REFERENCES oxauth_server_logging_event(id)
 ```
 
-##oxauth_server_logging_event_exception
+## oxauth_server_logging_event_exception
 
              Column             |          Type          | Modifiers | Storage  | Stats target | Description
 --------------------------------|:----------------------:|----------:|---------:|-------------:|-------------
@@ -189,23 +189,23 @@ Schema |                 Name                  | Type  | Owner
  trace_line                     | text                   |           | extended |              |
  oxauth_server_logging_event_id | bigint                 |           | plain    |              |
  
-#####Indexes:
+##### Indexes:
 ```
     "oxauth_server_logging_event_exception_pkey" PRIMARY KEY, btree (id)
 ```
-#####Foreign-key constraints:
+##### Foreign-key constraints:
 ```
     "fktp5p28uolrsx6vlj6annm7255" FOREIGN KEY (oxauth_server_logging_event_id) REFERENCES oxauth_server_logging_event(id)
 ```
 
-#MySQL
+# MySQL
 To create schema for MySQL use [mysql-schema.sql](https://github.com/GluuFederation/message-consumer/blob/master/schema/mysql_schema.sql).
 
 ```
 source ${path_to_file}/mysql_schema.sql
 ```
 
-#PostgreSQL
+# PostgreSQL
 To create schema for PostgreSQL use [postgresql_schema.sql](https://github.com/GluuFederation/message-consumer/blob/master/schema/postgresql_schema.sql).
 
 Edit `postgresql_schema.sql` to change databse Owner and postgresql user. Here is example how to create `gluu` user and create database schema:
@@ -223,7 +223,7 @@ Note: update `spring.datasource.username` and `spring.datasource.password` in `a
 4. Run activeMQ, e.g: `apache-activemq-x.x.x-bin.tar.gz/bin/activemq start`
 5. Optional. Navigate to activeMQ console `http://localhost:8161/`.
 
-#Building and running
+# Building and running
 [message-consumer](https://github.com/GluuFederation/message-consumer) supports four production profiles: `dev`, `prod`, `prod-mysql` and `prod-postgresql`.
 
 0. `dev` profile includes in-memory h2 database and also write logs to the file( by default filename is message-consumer.log and filepath is the same directory from which the application was launched). H2 console could be accessed from `/h2-console` uri(JDBC URL is `jdbc:h2:mem:gluu_log;DB_CLOSE_DELAY=-1`). Log filename and path could be configured by providing `--logging.file` and `--logging.path` as additional console params (e.g: `java -jar target/message-consumer-0.0.1-SNAPSHOT.jar --logging.file=message-consumer.log --logging.path=.`).
