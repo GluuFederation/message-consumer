@@ -216,7 +216,7 @@ CREATE USER gluu WITH password 'root';
 ```
 Note: update `spring.datasource.username` and `spring.datasource.password` in `application-prod-postgresql.properties` after creating new postgresql user.
 
-#Install and run activeMQ
+# Install and run activeMQ
 1. Download the activemq zipped tarball file to the Unix machine, using either a browser or a tool, i.e., wget, scp, ftp, etc. (see [Download](http://activemq.apache.org/download.html) -> "The latest stable release")
 2. Extract archive, e.g: `tar -xvzf apache-activemq-x.x.x-bin.tar.gz`
 3. Edit `apache-activemq-x.x.x-bin.tar.gz/bin/env` to specify the location of your java installation using JAVA_HOME
