@@ -226,10 +226,10 @@ Note: update `spring.datasource.username` and `spring.datasource.password` in `a
 # Building and running
 [message-consumer](https://github.com/GluuFederation/message-consumer) supports four production profiles: `dev`, `prod`, `prod-mysql` and `prod-postgresql`.
 
-0. `dev` profile includes in-memory h2 database and also write logs to the file( by default filename is message-consumer.log and filepath is the same directory from which the application was launched). H2 console could be accessed from `/h2-console` uri(JDBC URL is `jdbc:h2:mem:gluu_log;DB_CLOSE_DELAY=-1`). Log filename and path could be configured by providing `--logging.file` and `--logging.path` as additional console params (e.g: `java -jar target/message-consumer-0.0.1-SNAPSHOT.jar --logging.file=message-consumer.log --logging.path=.`).
-1. `prod` profile contains dependencies to both postgresql and mysql database connectors. To select required database you need to pass `--database` property to the command line with the following values: `postgresql` or `mysql`.
-2. `prod-mysql` profile contains dependency only for mysql database connector.
-3. `prod-postgresql` profile contains dependency only for postgresql database connector.
+1. `dev` profile includes in-memory h2 database and also write logs to the file( by default filename is message-consumer.log and filepath is the same directory from which the application was launched). H2 console could be accessed from `/h2-console` uri(JDBC URL is `jdbc:h2:mem:gluu_log;DB_CLOSE_DELAY=-1`). Log filename and path could be configured by providing `--logging.file` and `--logging.path` as additional console params (e.g: `java -jar target/message-consumer-0.0.1-SNAPSHOT.jar --logging.file=message-consumer.log --logging.path=.`).
+2. `prod` profile contains dependencies to both postgresql and mysql database connectors. To select required database you need to pass `--database` property to the command line with the following values: `postgresql` or `mysql`.
+3. `prod-mysql` profile contains dependency only for mysql database connector.
+4. `prod-postgresql` profile contains dependency only for postgresql database connector.
 
 Before running this app make sure that MySQL/PostgreSQL is running and schema is created and activeMQ is installed and running. Also check the configuration from `application-{profile}.properties`, make sure that connection properties to activeMQ and database are correct.
 
