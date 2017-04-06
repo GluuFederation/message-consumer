@@ -134,6 +134,99 @@ Default page size for all requests is 20, and max page size is 100. These proper
 }
 ```
 
+`curl http://127.0.0.1:9339/logger/api/oxauth-server-logs?page=3&size=1`
+```
+{
+  "_embedded" : {
+    "oxauth-server-logs" : [ {
+      "timestamp" : "2017-01-14T18:48:17.000+0000",
+      "formattedMessage" : "Start U2F request clean up",
+      "loggerName" : "org.xdi.oxauth.service.CleanerTimer",
+      "level" : "DEBUG",
+      "exceptions" : [ ],
+      "_links" : {
+        "self" : {
+          "href" : "http://127.0.0.1:9339/logger/api/oxauth-server-logs/4"
+        },
+        "oXAuthServerLoggingEvent" : {
+          "href" : "http://127.0.0.1:9339/logger/api/oxauth-server-logs/4"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "first" : {
+      "href" : "http://127.0.0.1:9339/logger/api/oxauth-server-logs?page=0&size=1"
+    },
+    "prev" : {
+      "href" : "http://127.0.0.1:9339/logger/api/oxauth-server-logs?page=2&size=1"
+    },
+    "self" : {
+      "href" : "http://127.0.0.1:9339/logger/api/oxauth-server-logs"
+    },
+    "next" : {
+      "href" : "http://127.0.0.1:9339/logger/api/oxauth-server-logs?page=4&size=1"
+    },
+    "last" : {
+      "href" : "http://127.0.0.1:9339/logger/api/oxauth-server-logs?page=486&size=1"
+    },
+    "profile" : {
+      "href" : "http://127.0.0.1:9339/logger/api/profile/oxauth-server-logs"
+    },
+    "search" : {
+      "href" : "http://127.0.0.1:9339/logger/api/oxauth-server-logs/search"
+    }
+  },
+  "page" : {
+    "size" : 1,
+    "totalElements" : 487,
+    "totalPages" : 487,
+    "number" : 3
+  }
+}
+```
+
+
+`http://127.0.0.1:9339/logger/api/oxauth-server-logs/4`
+```
+{
+  "timestamp" : "2017-01-14T18:48:17.000+0000",
+  "formattedMessage" : "Start U2F request clean up",
+  "loggerName" : "org.xdi.oxauth.service.CleanerTimer",
+  "level" : "DEBUG",
+  "exceptions" : [ ],
+  "_links" : {
+    "self" : {
+      "href" : "http://127.0.0.1:9339/logger/api/oxauth-server-logs/4"
+    },
+    "oXAuthServerLoggingEvent" : {
+      "href" : "http://127.0.0.1:9339/logger/api/oxauth-server-logs/4"
+    }
+  }
+}
+```
+
+`http://127.0.0.1:9339/logger/api/oauth2-audit-logs/1`
+```
+{
+  "ip" : "10.0.2.2",
+  "action" : "USER_AUTHORIZATION",
+  "clientId" : "@!00EA.DF1E.31A5.C287!0001!50C2.44A6!0008!DF32.8FD8",
+  "macAddress" : "08-00-27-36-17-42",
+  "username" : null,
+  "scope" : "openid profile email user_name",
+  "success" : false,
+  "timestamp" : "2017-01-14T19:17:49.000+0000",
+  "_links" : {
+    "self" : {
+      "href" : "http://127.0.0.1:9339/logger/api/oauth2-audit-logs/1"
+    },
+    "oAuth2AuditLoggingEvent" : {
+      "href" : "http://127.0.0.1:9339/logger/api/oauth2-audit-logs/1"
+    }
+  }
+}
+```
 # Database schema
 
 ## List of relations
