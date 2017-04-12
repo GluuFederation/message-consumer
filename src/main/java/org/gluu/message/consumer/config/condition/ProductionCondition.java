@@ -7,4 +7,5 @@ import org.springframework.context.annotation.Condition;
  */
 public interface ProductionCondition extends Condition {
     String DATABASE = "database";
+    String ENABLE_LOGGING = "enable-logging";
 }

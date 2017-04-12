@@ -28,6 +28,8 @@ public class MySQLConfiguration {
     @Bean
     @ConfigurationProperties(prefix = "spring.mysql.datasource")
     public DataSource dataSource() {
-        return (DataSource) DataSourceBuilder.create().type(DataSource.class).build();
+        DataSource dataSource = (DataSource) DataSourceBuilder.create().type(DataSource.class).build();
+        DatasourceConnectionPool.configureDatasource(dataSource);
+        return dataSource;
     }
 }

@@ -1,7 +1,7 @@
 package org.gluu.message.consumer.receiver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.gluu.message.consumer.config.util.Constants;
+import org.gluu.message.consumer.config.condition.ProductionCondition;
 import org.gluu.message.consumer.domain.OAuth2AuditLoggingEvent;
 import org.gluu.message.consumer.repository.OAuth2AuditLoggingEventRepository;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class OAuth2AuditLoggingEventReceiver {
             OAuth2AuditLoggingEvent oAuth2AuditLoggingEvent = objectMapper.readValue(message, OAuth2AuditLoggingEvent.class);
             repository.save(oAuth2AuditLoggingEvent);
 
-            if (environment.acceptsProfiles(Constants.SPRING_PROFILE_DEVELOPMENT))
+            if ("true".equals(environment.getProperty(ProductionCondition.ENABLE_LOGGING)))
                 logger.info(message.replace("\n", "").replace("\r", ""));
         } catch (IOException e) {
             logger.error("Could not deserialize the message.", e);

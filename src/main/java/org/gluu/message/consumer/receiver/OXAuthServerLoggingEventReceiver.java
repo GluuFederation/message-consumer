@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.core.impl.ExtendedStackTraceElement;
 import org.apache.logging.log4j.core.impl.Log4jLogEvent;
 import org.apache.logging.log4j.core.impl.ThrowableProxy;
-import org.gluu.message.consumer.config.util.Constants;
+import org.gluu.message.consumer.config.condition.ProductionCondition;
 import org.gluu.message.consumer.domain.log4j.OXAuthServerLoggingEvent;
 import org.gluu.message.consumer.domain.log4j.OXAuthServerLoggingEventException;
 import org.gluu.message.consumer.repository.OXAuthServerLoggingEventRepository;
@@ -63,7 +63,7 @@ public class OXAuthServerLoggingEventReceiver {
             }
             oxAuthServerLoggingEvent.setExceptions(exceptions);
         }
-        if (environment.acceptsProfiles(Constants.SPRING_PROFILE_DEVELOPMENT)){
+        if ("true".equals(environment.getProperty(ProductionCondition.ENABLE_LOGGING))){
             try {
                 logger.info(objectMapper.writeValueAsString(oxAuthServerLoggingEvent));
             } catch (JsonProcessingException e) {
