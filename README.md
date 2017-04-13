@@ -11,7 +11,7 @@
 9. [MySQL](https://github.com/GluuFederation/message-consumer#mysql)
 10. [PostgreSQL](https://github.com/GluuFederation/message-consumer#postgresql)
 11. [Building and running](https://github.com/GluuFederation/message-consumer#building-and-running)
-12. [Enable logging](https://github.com/GluuFederation/message-consumer#enable-loggingl)
+12. [Enable logging](https://github.com/GluuFederation/message-consumer#enable-logging)
 
 # About
 The goal of this app to centralize all logs in one place and to provide a quick access to logging data by exposing RESTful API for searching with custom conditions. Roots of this project are drawn to the following [issue](https://github.com/GluuFederation/oxAuth/issues/307).
