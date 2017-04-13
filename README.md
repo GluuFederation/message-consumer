@@ -11,6 +11,7 @@
 9. [MySQL](https://github.com/GluuFederation/message-consumer#mysql)
 10. [PostgreSQL](https://github.com/GluuFederation/message-consumer#postgresql)
 11. [Building and running](https://github.com/GluuFederation/message-consumer#building-and-running)
+12. [Enable logging](https://github.com/GluuFederation/message-consumer#enable-loggingl)
 
 # About
 The goal of this app to centralize all logs in one place and to provide a quick access to logging data by exposing RESTful API for searching with custom conditions. Roots of this project are drawn to the following [issue](https://github.com/GluuFederation/oxAuth/issues/307).
@@ -316,6 +317,7 @@ Note: update `spring.datasource.username` and `spring.datasource.password` in `a
 4. Run activeMQ, e.g: `apache-activemq-x.x.x-bin.tar.gz/bin/activemq start`
 5. Optional. Navigate to activeMQ console `http://localhost:8161/`.
 
+
 # Building and running
 [message-consumer](https://github.com/GluuFederation/message-consumer) supports four production profiles: `dev`, `prod`, `prod-mysql` and `prod-postgresql`.
 
@@ -358,4 +360,13 @@ git clone https://github.com/GluuFederation/message-consumer.git
 cd message-consumer/
 sudo mvn -Pprod-postgresql clean package
 java -jar target/message-consumer-0.0.1-SNAPSHOT.jar
+```
+
+# Enable logging
+[message-consumer](https://github.com/GluuFederation/message-consumer) uses [logback](https://logback.qos.ch/) as a logging library. In order to enable logging to file you need to run [message-consumer](https://github.com/GluuFederation/message-consumer) with the following arguments:`--enable-logging=true`.
+By default [logback](https://logback.qos.ch/) will write logs in `./logs` folder and will archive logs in `./logs/archive`. In order to configure logging path you need to override `message-consumer.logger-path` property, e.g: `--message-consumer.logger-path=/Users/testUser/Desktop`. In this case [logback](https://logback.qos.ch/) will write logs into `/Users/testUser/Desktop` folder and archives into `/Users/testUser/Desktop/archive`
+
+### Example
+```
+java -jar target/message-consumer-0.0.1-SNAPSHOT.jar --database=mysql --enable-logging=true --message-consumer.logger-path=/Users/testUser/Desktop
 ```
