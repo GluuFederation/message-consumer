@@ -3,9 +3,31 @@
 <configuration scan="true">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
+    <springProperty scope="context" name="logger-path" source="message-consumer.logger-path"/>
 
-    <logger name="org.gluu.message.consumer" level="INFO"/>
+    <appender name="FILE-AUDIT"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logger-path}/message-consumer.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} - %msg%n
+            </Pattern>
+        </encoder>
 
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${logger-path}/archive/message-consumer.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="org.gluu.message.consumer.receiver" level="INFO">
+        <appender-ref ref="FILE-AUDIT"/>
+    </logger>
 
     <logger name="org.apache.activemq" level="WARN"/>
     <logger name="javax.activation" level="WARN"/>
@@ -17,7 +39,7 @@
     <logger name="org.hibernate.validator" level="WARN"/>
     <logger name="org.hibernate" level="WARN"/>
     <logger name="org.springframework" level="WARN"/>
-    
+
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
     </contextListener>

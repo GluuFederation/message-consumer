@@ -10,12 +10,22 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "message-consumer", ignoreUnknownFields = false)
 public class MessageConsumerProperties {
 
+    private String logger_path = "";
+
     private final BaseProperties oauth2_audit = new BaseProperties();
 
     private final BaseProperties oxauth_server = new BaseProperties();
 
+    public String getLogger_path() {
+        return logger_path;
+    }
+
     public BaseProperties getOauth2_audit() {
         return oauth2_audit;
+    }
+
+    public void setLogger_path(String logger_path) {
+        this.logger_path = logger_path;
     }
 
     public BaseProperties getOxauth_server() {
