@@ -257,7 +257,7 @@ Schema |                 Name                  | Type  | Owner
 ```
 
 ## oxauth_server_logging_event
-      Column       |            Type             | Modifiers | Storage  | Stats target | Description
+  Column           |            Type             | Modifiers | Storage  | Stats target | Description
 -------------------|:---------------------------:|----------:|---------:|-------------:|-------------
  id                | bigint                      | not null  | plain    |              |
  formatted_message | text                        |           | extended |              |
@@ -276,7 +276,7 @@ Schema |                 Name                  | Type  | Owner
 
 ## oxauth_server_logging_event_exception
 
-             Column             |          Type          | Modifiers | Storage  | Stats target | Description
+   Column                       |          Type          | Modifiers | Storage  | Stats target | Description
 --------------------------------|:----------------------:|----------:|---------:|-------------:|-------------
  id                             | bigint                 | not null  | plain    |              |
  index                          | integer                |           | plain    |              |
